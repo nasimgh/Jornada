@@ -1,4 +1,4 @@
 Jornada
 =======
 
-Misc files needed for Jornada
+Source files in Jornada, LandPKS project.
