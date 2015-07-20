@@ -60,7 +60,7 @@ shinyServer(function(input, output,session) {
   
   
     output$stats <- renderText({
-      updateStats(input$checkGroup,input$dates,input$count)
+      paste(input$checkGroup,input$dates,input$count)
       
       paste("Plot Statistics (user/month): ", "",
             paste("Mean : ",statMean),

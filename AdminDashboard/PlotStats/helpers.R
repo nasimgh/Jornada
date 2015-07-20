@@ -66,6 +66,11 @@ json_agg_data <- aggregate(json_data$value , list(user = json_data$recorderName,
 months<- unique(json_agg_data$time)
 
 getUserData<-function (userList,dates,count){  
+  statMean <<- 0
+  statMedian <<- 0
+  statMin <<- 0
+  statMax <<- 0  
+  
   start <- dates[1]
   end <- dates[2]
   
@@ -82,6 +87,8 @@ getUserData<-function (userList,dates,count){
   userData <- userData[userData$x <= max & userData$x >= min  ,]
   
   if(nrow(userData) ==0 ) return (NULL)
+  
+  updateStats(userData)
   
   dates<- unique(userData$time)
   emails<- unique(userData$user)
@@ -113,30 +120,7 @@ getUserData<-function (userList,dates,count){
   return (data)
 }
 
-updateStats<- function (userList,dates,count){
-   
-  statMean <<- 0
-  statMedian <<- 0
-  statMin <<- 0
-  statMax <<- 0
-  
-  start <- dates[1]
-  end <- dates[2]
-  
-  min <- count[1]
-  max <- count[2]
-  
-  userData <-json_data[json_data$modifiedDate <= end & json_data$modifiedDate >= start,]
-  userData <- userData[userData$recorderName  %in% userList ,]
-  
-  if(nrow(userData) ==0 ) return (NULL)
-  
-  userData <- aggregate(userData$value , list(user = userData$recorderName, time = userData$shortdate), sum)
-  
-  userData <- userData[userData$x <= max & userData$x >= min  ,]
-  
-  if(nrow(userData) ==0 ) return (NULL)
-  
+updateStats<- function (userData){
   
   statMean <<- round(mean(userData$x),digits = 2)
   statMedian <<- median(userData$x)
