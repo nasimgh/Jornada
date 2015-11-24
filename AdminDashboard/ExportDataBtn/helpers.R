@@ -146,8 +146,8 @@ calcFormulas<-function(df){
     df[rowNo,"plot_total_canopy_gap_percentage"] <- sum(as.logical(plot$canopy_gap))*5 
     df[rowNo,"plot_total_basal_gap_percentage"] <- sum(as.logical(plot$basal_gap))*5
     
-    df[rowNo,"species_of_interest_1_density"] <- sum(plot$species_of_interest_1_count,na.rm = TRUE)/20
-    df[rowNo,"species_of_interest_2_density"] <- sum(plot$species_of_interest_2_count,na.rm = TRUE)/20
+    df[rowNo,"species_of_interest_1_density"] <- sum(as.numeric(plot$species_of_interest_1_count),na.rm = TRUE)/20
+    df[rowNo,"species_of_interest_2_density"] <- sum(as.numeric(plot$species_of_interest_2_count),na.rm = TRUE)/20
 
     
   }
@@ -313,11 +313,11 @@ getPlotListData<-function(){
 ###########
 updateRequestedData<-function(recorder,dataType){
   
-  if(dataType == "Metadata for LandInfo" )
+  if(dataType == "MetadataLandInfo" )
   {
     return (read.csv("./Export_METADATA_LandInfo.csv"))
   }
-  if(dataType =="Metadata for LandCover")
+  if(dataType =="MetadataLandCover")
   { 
     return (read.csv("./Export_METADATA_LandCover.csv"))   
   }
